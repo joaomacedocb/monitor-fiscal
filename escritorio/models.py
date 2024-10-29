@@ -13,6 +13,7 @@ class Escritorio(models.Model):
     )
     endereco = models.CharField(max_length=100, blank=True, null=True)
     numero = models.CharField(max_length=10, blank=True, null=True)
+    complemento = models.CharField(max_length=50, blank=True, null=True)
     cidade = models.CharField(max_length=50, blank=True, null=True)
     uf = models.CharField(max_length=2, blank=True, null=True)
     responsavel_tecnico = models.CharField(max_length=50)
@@ -20,8 +21,8 @@ class Escritorio(models.Model):
         max_length=15, blank=True, null=True,
         validators=[
             RegexValidator(
-                regex=r'^\(?\d{2}\)? ?9?\d{4}-\d{4}$',
-                message="O número de telefone deve estar no formato (99) 99999-9999 ou (99) 9999-9999."
+                regex=r'^\d{10,11}$',
+                message="O número de telefone deve conter apenas dígitos e ter 10 ou 11 dígitos."
             )
         ]
     )
