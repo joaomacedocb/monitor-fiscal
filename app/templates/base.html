@@ -132,6 +132,85 @@
         .field-value {
             color: #666;
         }
+
+        /* Estilos adicionais para a tabela de clientes */
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .actions form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .actions button {
+            padding: 8px 16px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            color: #333;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .add-client-bottom {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .add-client-bottom button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-client-bottom button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 
@@ -147,11 +226,11 @@
                 <span class="material-icons">home</span>
                 <span class="text">Início</span>
             </a>
-            <a href="#">
+            <a href="{% url 'clientes' %}">
                 <span class="material-icons">business</span>
                 <span class="text">Empresas</span>
             </a>
-            <a href="{% url 'escritorio_detalhes' id=escritorio.id %}">
+            <a href="{% url 'escritorio_detalhes' id=1 %}">
                 <span class="material-icons">person</span>
                 <span class="text">Meu Cadastro</span>
             </a>
