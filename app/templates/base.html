@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: width 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: 30px;
+        }
+
+        .sidebar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed .logo {
+            opacity: 0;
+        }
+
+        .sidebar .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar .menu a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar.collapsed .menu a span.text {
+            display: none;
+        }
+
+        .sidebar .menu a:hover {
+            color: #ddd;
+        }
+
+        .toggle-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            margin-bottom: 20px;
+            align-self: flex-start;
+            transition: transform 0.3s;
+        }
+
+        .sidebar.collapsed .toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            margin-left: 270px;
+            /* Espaço para o sidebar */
+            padding-left: 30px;
+            padding-top: 15px;
+            width: calc(100% - 270px);
+            transition: margin-left 0.3s, width 0.3s;
+        }
+
+        .sidebar.collapsed~.content {
+            margin-left: 50px;
+            width: calc(100% - 90px);
+        }
+
+        .container {
+            width: 90%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            font-size: 24px;
+            font-weight: bold;
+            gap: 8px;
+        }
+
+        .field {
+            margin-bottom: 10px;
+        }
+
+        .field-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .field-value {
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <!-- Botão de expandir/recolher -->
+        <span class="material-icons toggle-btn" onclick="toggleSidebar()">chevron_left</span>
+        <span class="logo">LOGO</span>
+        <div class="menu">
+            <a href="#">
+                <span class="material-icons">home</span>
+                <span class="text">Início</span>
+            </a>
+            <a href="#">
+                <span class="material-icons">business</span>
+                <span class="text">Empresas</span>
+            </a>
+            <a href="{% url 'escritorio_detalhes' id=escritorio.id %}">
+                <span class="material-icons">person</span>
+                <span class="text">Meu Cadastro</span>
+            </a>
+            <a href="#">
+                <span class="material-icons">settings</span>
+                <span class="text">Opções</span>
+            </a>
+            <a href="#">
+                <span class="material-icons">logout</span>
+                <span class="text">Sair</span>
+            </a>
+        </div>
+    </nav>
+    {% block content %}
+
+    {% endblock %}
+    <script>
+        // Função para expandir/recolher o sidebar
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("collapsed");
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+    <div class="container">
+        <div class="title">
+            <span>Meus Dados</span>
+            <span class="material-icons" style="color: #888;">help_outline</span>
+        </div>
+        <div class="field">
+            <span class="field-label">Nome:</span>
+            <span class="field-value">{{ escritorio.nome }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">CNPJ:</span>
+            <span class="field-value">{{ escritorio.cnpj }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">CEP:</span>
+            <span class="field-value">{{ escritorio.cep }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Endereço:</span>
+            <span class="field-value">{{ escritorio.endereco }}, {{ escritorio.numero }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Complemento:</span>
+            <span class="field-value">{{ escritorio.complemento }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Cidade:</span>
+            <span class="field-value">{{ escritorio.cidade }} - {{ escritorio.uf }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Responsável Técnico:</span>
+            <span class="field-value">{{ escritorio.responsavel_tecnico }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">E-mail:</span>
+            <span class="field-value">{{ escritorio.email }}</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Telefone:</span>
+            <span class="field-value">{{ escritorio.telefone }}</span>
+        </div>
+        <!-- Conteúdo adicional pode ser adicionado aqui -->
+    </div>
+</div>
+{% endblock %}
