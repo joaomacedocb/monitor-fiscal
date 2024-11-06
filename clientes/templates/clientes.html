@@ -10,7 +10,8 @@
                 <input type="text" name="search" placeholder="Pesquisar clientes" value="{{ request.GET.search }}">
                 <button type="submit">Buscar</button>
             </form>
-            <button class="add-client-btn">Adicionar Cliente</button>
+            <a href="{% url 'novo_cliente' %}" class="add-client-btn"><button >Adicionar Cliente</button></a>
+            
         </div>
 
         {% if clientes %}
