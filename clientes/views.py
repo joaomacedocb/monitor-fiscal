@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
 
@@ -13,6 +13,11 @@ def clientes_view(request):
 
 
 def novo_cliente_view(request):
-    
-    novo_cliente_form = ClienteForm()
+    if request.method == 'POST':
+        novo_cliente_form = ClienteForm(request.POST)
+        if novo_cliente_form.is_valid():
+            novo_cliente_form.save()
+            return redirect('clientes')
+    else:
+        novo_cliente_form = ClienteForm()
     return render(request, 'novo_cliente.html', { 'novo_cliente_form': novo_cliente_form })

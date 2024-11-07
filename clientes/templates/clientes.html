@@ -34,7 +34,13 @@
                         <td>{{ cliente.cnpj }}</td>
                         <td>{{ cliente.nome_fantasia }}</td>
                         <td>{{ cliente.telefone }}<br>{{ cliente.email }}</td>
-                        <td>{{ cliente.ultima_atualizacao }}</td>
+                        <td>
+                            {% if cliente.ultima_atualizacao %}
+                                {{ cliente.ultima_atualizacao }}
+                            {% else %}
+                                Aguardando a primeira análise
+                            {% endif %}
+                        </td>
                         <td class="status-tag">
                             <span>{{ cliente.regime_fiscal }}</span>
                             <span>{{ cliente.status }}</span>

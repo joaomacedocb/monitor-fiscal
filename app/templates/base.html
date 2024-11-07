@@ -27,12 +27,12 @@
             position: fixed;
             left: 0;
             top: 0;
-            transition: width 0.3s;
+            transition: width 0.2s;
             overflow: hidden;
         }
 
         .sidebar.collapsed {
-            width: 30px;
+            width: 25px;
         }
 
         .sidebar .logo {
@@ -41,7 +41,7 @@
             margin-bottom: 30px;
             white-space: nowrap;
             overflow: hidden;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
         }
 
         .sidebar.collapsed .logo {
@@ -63,7 +63,7 @@
             font-size: 18px;
             white-space: nowrap;
             overflow: hidden;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
         }
 
         .sidebar.collapsed .menu a span.text {
@@ -80,7 +80,7 @@
             color: white;
             margin-bottom: 20px;
             align-self: flex-start;
-            transition: transform 0.3s;
+            transition: transform 0.2s;
         }
 
         .sidebar.collapsed .toggle-btn {
@@ -95,7 +95,6 @@
             padding-left: 30px;
             padding-top: 15px;
             width: calc(100% - 270px);
-            transition: margin-left 0.3s, width 0.3s;
         }
 
         .sidebar.collapsed~.content {
@@ -231,13 +230,60 @@
             font-weight: bold;
             font-size: 14px;
         }
+
+        /* Estilo do formulário de novo cliente */
+        .tabela-adicionar-clientes th {
+            width: 20%;
+        }
+
+        .tabela-adicionar-clientes input {
+            height: 18px;
+            border-radius: 4px;
+            width: 80%;
+        }
+
+        .tabela-adicionar-clientes select {
+            height: 28px;
+            border-radius: 4px;
+            width: 40%;
+        }
+
+        .botao-primario {
+            padding: 8px 16px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .botao-primario:hover {
+            background-color: #0056b3;
+        }
+
+        .botao-secundario {
+            padding: 8px 16px;
+            font-size: 16px;
+            color: #333;
+            background-color: #ffffff;
+            border: #333 1px solid;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .botao-secundario:hover {
+            background-color: #e6e6e6;
+        }
+
+
     </style>
 </head>
 
 <body>
 
     <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
+    <nav class="sidebar collapsed" id="sidebar">
         <!-- Botão de expandir/recolher -->
         <span class="material-icons toggle-btn" onclick="toggleSidebar()">chevron_left</span>
         <span class="logo">LOGO</span>
@@ -268,11 +314,28 @@
 
     {% endblock %}
     <script>
-        // Função para expandir/recolher o sidebar
+        // Função para expandir/recolher o sidebar e salvar o estado no localStorage
         function toggleSidebar() {
             var sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("collapsed");
+            
+            // Salva o estado no localStorage
+            if (sidebar.classList.contains("collapsed")) {
+                localStorage.setItem("sidebarCollapsed", "true");
+            } else {
+                localStorage.setItem("sidebarCollapsed", "false");
+            }
         }
+    
+        // Ao carregar a página, aplica o estado salvo
+        window.onload = function() {
+            var sidebar = document.getElementById("sidebar");
+            if (localStorage.getItem("sidebarCollapsed") === "true") {
+                sidebar.classList.add("collapsed");
+            } else {
+                sidebar.classList.remove("collapsed");
+            }
+        };
     </script>
 
 </body>

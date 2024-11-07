@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 from django import forms
 from django.core.validators import RegexValidator
 
-from clientes.models import RegimeFiscal
+from clientes.models import RegimeFiscal, Cliente
 
 class ClienteForm(forms.Form):
     nome_fantasia = forms.CharField(
@@ -41,3 +41,17 @@ class ClienteForm(forms.Form):
             )
         ]
     )
+
+    def save(self):
+        cliente = Cliente(
+            nome_fantasia = self.cleaned_data['nome_fantasia'],
+            razao_social = self.cleaned_data['razao_social'],
+            cnpj = self.cleaned_data['cnpj'],
+            responsavel_tecnico = self.cleaned_data['responsavel_tecnico'],
+            email = self.cleaned_data['email'],
+            regime_fiscal = self.cleaned_data['regime_fiscal'],
+            telefone = self.cleaned_data['telefone'],
+            status = 'Em análise',
+        )
+        cliente.save()
+        return cliente
