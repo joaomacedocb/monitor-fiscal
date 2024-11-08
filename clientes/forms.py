@@ -6,30 +6,7 @@ from django.core.validators import RegexValidator
 
 from clientes.models import RegimeFiscal, Cliente
 
-class ClienteForm(forms.Form):
-    nome_fantasia = forms.CharField(
-        max_length=200,
-        label="Nome Fantasia"
-    )
-    razao_social = forms.CharField(
-        max_length=200,
-        label="Razão Social"
-    )
-    cnpj = forms.CharField(
-        max_length=14,
-        required=False,
-        label="CNPJ"
-    )
-    responsavel_tecnico = forms.CharField(
-        max_length=50,
-        label="Responsável"
-    )
-    email = forms.EmailField(
-        required=False,
-        label="E-mail"
-    )
-    regime_fiscal = forms.ModelChoiceField(RegimeFiscal.objects.all(), label="Regime Fiscal")
-
+class ClienteForm(forms.ModelForm):
     telefone = forms.CharField(
         max_length=15,
         required=False,
@@ -42,16 +19,35 @@ class ClienteForm(forms.Form):
         ]
     )
 
-    def save(self):
-        cliente = Cliente(
-            nome_fantasia = self.cleaned_data['nome_fantasia'],
-            razao_social = self.cleaned_data['razao_social'],
-            cnpj = self.cleaned_data['cnpj'],
-            responsavel_tecnico = self.cleaned_data['responsavel_tecnico'],
-            email = self.cleaned_data['email'],
-            regime_fiscal = self.cleaned_data['regime_fiscal'],
-            telefone = self.cleaned_data['telefone'],
-            status = 'Em análise',
-        )
-        cliente.save()
+    class Meta:
+        model = Cliente
+        fields = [
+            'nome_fantasia', 
+            'razao_social', 
+            'cnpj', 
+            'responsavel_tecnico', 
+            'email', 
+            'regime_fiscal', 
+            'telefone'
+        ]
+        labels = {
+            'nome_fantasia': "Nome Fantasia",
+            'razao_social': "Razão Social",
+            'cnpj': "CNPJ",
+            'responsavel_tecnico': "Responsável",
+            'email': "E-mail",
+            'regime_fiscal': "Regime Fiscal",
+            'telefone': "Telefone"
+        }
+
+    def save(self, commit=True):
+        cliente = super().save(commit=False)
+        
+        cliente.nome_fantasia = self.cleaned_data['nome_fantasia'].upper()
+        cliente.razao_social = self.cleaned_data['razao_social'].upper()
+        cliente.responsavel_tecnico = self.cleaned_data['responsavel_tecnico'].upper()
+        
+        cliente.status = 'Em análise'  # Define o status padrão
+        if commit:
+            cliente.save()
         return cliente
