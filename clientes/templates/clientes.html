@@ -10,8 +10,10 @@
                 <input type="text" name="search" placeholder="Digite o nome ou CNPJ" value="{{ request.GET.search }}">
                 <button type="submit">Buscar</button>
             </form>
-            <a href="{% url 'novo_cliente' %}" class="add-client-btn"><button >Adicionar Cliente</button></a>
-            
+            <div>
+                <a href="{% url 'novo_cliente' %}" class="add-client-btn"><button >Adicionar Cliente</button></a>
+                <a href="{% url 'atualizar_clientes' %}" class="update-clients-btn"><button type="button">Atualizar CNPJs</button></a>
+            </div>
         </div>
 
         {% if clientes %}
@@ -38,12 +40,18 @@
                             {% if cliente.ultima_atualizacao %}
                                 {{ cliente.ultima_atualizacao }}
                             {% else %}
-                                Aguardando a primeira análise
+                                Aguardando a primeira análise.
                             {% endif %}
                         </td>
                         <td class="status-tag">
                             <span>{{ cliente.regime_fiscal }}</span>
-                            <span>{{ cliente.status }}</span>
+                            <span>
+                                {% if cliente.status %}
+                                    {{ cliente.status }}
+                                {% else %}
+                                    Em análise
+                                {% endif %}
+                            </span>
                         </td>
                         <td class="actions-icons">
                             <span class="material-icons">visibility</span>
@@ -54,10 +62,11 @@
                 </tbody>
             </table>
         {% else %}
-            <p>Não há clientes cadastrados. Deseja adicionar um cliente?</p>
-            <div class="add-client-bottom">
-                <button>Adicionar Cliente</button>
+            <div class="placeholder-clientes">
+                <div class="material-icons">search_off</div>
+                <h3>Não há clientes cadastrados. Clique em "Adicionar cliente" para iniciar um cadastro.</h3>
             </div>
+
         {% endif %}
     </div>
 </div>

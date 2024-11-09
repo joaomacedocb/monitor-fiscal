@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
+from django.contrib import messages
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
+from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
 
 def clientes_view(request):
     clientes = Cliente.objects.all().order_by('nome_fantasia')
@@ -21,3 +23,8 @@ def novo_cliente_view(request):
     else:
         novo_cliente_form = ClienteForm()
     return render(request, 'novo_cliente.html', { 'novo_cliente_form': novo_cliente_form })
+
+def atualizar_clientes_view(request):
+    consulta_e_atualiza_clientes()
+    messages.success(request, "Os dados dos clientes foram atualizados com sucesso.")
+    return redirect('clientes')
