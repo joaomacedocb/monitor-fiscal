@@ -6,6 +6,13 @@
         <div class="title">Novo Cliente</div>
         <p>Insira abaixo as informações do novo cliente que está sendo cadastrado.</p>
         <form method="post" enctype="multipart/form-data">
+            {% if form.errors %}
+            <ul>
+                {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             {% csrf_token %}
             <table class="tabela-adicionar-clientes">
                 {{ novo_cliente_form.as_table }}

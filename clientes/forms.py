@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 from django import forms
 from django.core.validators import RegexValidator
 
-from clientes.models import RegimeFiscal, Cliente
+from clientes.models import Cliente
 
 class ClienteForm(forms.ModelForm):
     telefone = forms.CharField(
@@ -47,7 +47,14 @@ class ClienteForm(forms.ModelForm):
         cliente.razao_social = self.cleaned_data['razao_social'].upper()
         cliente.responsavel_tecnico = self.cleaned_data['responsavel_tecnico'].upper()
         
-        cliente.status = 'Em análise'  # Define o status padrão
+        cliente.status = 'Em análise'
         if commit:
             cliente.save()
         return cliente
+    
+    def clean_cnpj(self):
+        cnpj = self.cleaned_data['cnpj']
+        if Cliente.objects.filter(cnpj=cnpj).exists():
+            raise forms.ValidationError('O CNPJ informado já existe na base de dados.')
+        
+        return cnpj
