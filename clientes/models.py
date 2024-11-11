@@ -20,6 +20,8 @@ class Cliente(models.Model):
     responsavel_tecnico = models.CharField(max_length=50)
     email = models.CharField(max_length=200, blank=True, null=True)
     regime_fiscal = models.ForeignKey(RegimeFiscal, on_delete=models.PROTECT, related_name= 'regime_fiscal')
+    data_inclusao = models.DateField(blank= True, null= True)
+    data_exclusao = models.DateField(blank= True, null= True)
     ultima_atualizacao = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=20, blank= True, null= True)
     telefone = models.CharField(
