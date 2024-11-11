@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+    <div class="container container-detalhes">
+        <div class="title">Detahes cliente. Cód.: {{ object.id }}</div>
+        <p><strong>CNPJ: </strong>{{ object.cnpj }}</p>
+        <p><strong>Razão social: </strong>{{ object.razao_social }}</p>
+        <p><strong>Nome fantasia: </strong>{{ object.nome_fantasia }}</p>
+        <p><strong>Responsável: </strong>{{ object.responsavel_tecnico }}</p>
+        <p><strong>E-mail: </strong>{{ object.email}}</p>
+        <p><strong>Telefone: </strong>{{ object.telefone }}</p>
+        <p><strong>Regime Fiscal: </strong>{{ object.regime_fiscal }}</p>
+        <p><strong>Status: </strong>{{ object.status }}</p>
+        <p><strong>Última atualização: </strong>{{ object.ultima_atualizacao }}</p>
+        <div class="actions">
+            <div class="hub-clientes-detalhe">
+                <a href="{% url 'novo_cliente' %}" class="botao-primario">Editar</a>
+                <a href="{% url 'atualizar_clientes' %}" class="botao-secundario">Excluir</a>
+                <a href="{% url 'clientes' %}" class="botao-secundario">Voltar</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

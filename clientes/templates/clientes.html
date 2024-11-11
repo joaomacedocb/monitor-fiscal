@@ -54,8 +54,10 @@
                             </span>
                         </td>
                         <td class="actions-icons">
-                            <span class="material-icons">visibility</span>
-                            <span class="material-icons">search</span>
+                            <a href="{% url 'cliente_detalhe' cliente.pk %}">
+                                <span class="material-icons">visibility</span>
+                            </a>
+                            
                         </td>
                     </tr>
                     {% endfor %}

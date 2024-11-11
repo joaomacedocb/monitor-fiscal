@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
+from django.views.generic import DetailView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
 
 def clientes_view(request):
@@ -28,3 +29,7 @@ def atualizar_clientes_view(request):
     consulta_e_atualiza_clientes()
     messages.success(request, "Os dados dos clientes foram atualizados com sucesso.")
     return redirect('clientes')
+
+class ClienteDetailView(DetailView):
+    model = Cliente
+    template_name = 'cliente_detalhe.html'
