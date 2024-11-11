@@ -1,3 +1,4 @@
+import datetime
 import time
 import requests
 from django.utils import timezone
@@ -21,6 +22,13 @@ def consulta_e_atualiza_clientes():
                     
                     cliente.status = "Ativo" if optante_simples == "Sim" else "Inativo"
                     cliente.ultima_atualizacao = timezone.now()
+                    data_inclusao_str = simples_info.get("data_opcao_simples")
+                    data_exclusao_str = simples_info.get("data_exclusao_simples")
+    
+                    if data_inclusao_str:
+                        cliente.data_inclusao = datetime.datetime.strptime(data_inclusao_str, "%Y-%m-%d").date()
+                    if data_exclusao_str:
+                        cliente.data_exclusao = datetime.datetime.strptime(data_exclusao_str, "%Y-%m-%d").date()
 
                     cliente.save()
                     print(f"Atualizado Cliente {cliente.id} - CNPJ: {cnpj}")
@@ -42,6 +50,14 @@ def consulta_e_atualiza_clientes():
                     
                     cliente.status = "Ativo" if optante_mei == "Sim" else "Inativo"
                     cliente.ultima_atualizacao = timezone.now()
+                    
+                    data_inclusao_str = mei_info.get("data_opcao_mei")
+                    data_exclusao_str = mei_info.get("data_exclusao_mei")
+    
+                    if data_inclusao_str:
+                        cliente.data_inclusao = datetime.datetime.strptime(data_inclusao_str, "%Y-%m-%d").date()
+                    if data_exclusao_str:
+                        cliente.data_exclusao = datetime.datetime.strptime(data_exclusao_str, "%Y-%m-%d").date()
 
                     cliente.save()
                     print(f"Atualizado Cliente {cliente.id} - CNPJ: {cnpj}")
