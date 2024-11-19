@@ -16,7 +16,7 @@
         <p><strong>Última atualização: </strong>{{ object.ultima_atualizacao }}</p>
         <div class="actions">
             <div class="hub-clientes-detalhe">
-                <a href="{% url 'novo_cliente' %}" class="botao-primario">Editar</a>
+                <a href="{% url 'cliente_update' pk=cliente.pk%}" class="botao-primario">Editar</a>
                 <a href="{% url 'atualizar_clientes' %}" class="botao-secundario">Excluir</a>
                 <a href="{% url 'clientes' %}" class="botao-secundario">Voltar</a>
             </div>

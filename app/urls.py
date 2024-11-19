@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from clientes.views import ClienteDetailView, clientes_view, novo_cliente_view, atualizar_clientes_view
+from clientes.views import ClienteDetailView, ClienteUpdateView, clientes_view, novo_cliente_view, atualizar_clientes_view
 from escritorio import views
 
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
     path('novo_cliente/', novo_cliente_view, name='novo_cliente'),
     path('atualizar-clientes/', atualizar_clientes_view, name='atualizar_clientes'),
     path('cliente/<int:pk>/', ClienteDetailView.as_view(), name = 'cliente_detalhe'),
+    path('cliente/<int:pk>/update/', ClienteUpdateView.as_view(), name = 'cliente_update')
 ]

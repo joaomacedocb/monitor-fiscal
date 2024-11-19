@@ -3,8 +3,8 @@
 
 <div class="content">
     <div class="container">
-        <div class="title">Novo Cliente</div>
-        <p>Insira abaixo as informações do novo cliente que está sendo cadastrado.</p>
+        <div class="title">Editar Cliente</div>
+        <p>Nesta página você poderá atualizar os dados do cliente abaixo.</p>
         <form method="post" enctype="multipart/form-data">
             {% if form.errors %}
             <ul>
@@ -15,10 +15,10 @@
             {% endif %}
             {% csrf_token %}
             <table class="tabela-adicionar-clientes">
-                {{ novo_cliente_form.as_table }}
+                {{ form.as_table }}
             </table>
-            <input type="submit" value="Cadastrar cliente" class="botao-primario">
-            <a href="{% url 'clientes' %}" class="botao-secundario">Voltar</a>
+            <input type="submit" value="Salvar alterações" class="botao-primario">
+            <a href="{% url 'cliente_detalhe' pk=cliente.pk %}" class="botao-secundario">Voltar</a>
         </form>
     </div>
 </div>
