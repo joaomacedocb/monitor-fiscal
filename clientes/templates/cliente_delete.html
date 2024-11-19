@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="content">
+    <div class="container">
+        <div class="title">Excluir cliente</div>
+        <p>Deseja confirmar a exclusão do cliente CNPJ <strong>{{ object.cnpj }} - {{ object.razao_social }}</strong>?</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="submit" value="Confirmar exclusão" class="botao-excluir">
+            <a href="{% url 'cliente_detalhe' pk=cliente.pk %}" class="botao-secundario">Voltar</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

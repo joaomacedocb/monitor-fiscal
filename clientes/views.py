@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, DeleteView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
 
 def clientes_view(request):
@@ -39,4 +39,9 @@ class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'cliente_update.html'
+    success_url = reverse_lazy('clientes')
+    
+class ClienteDeleteView(DeleteView):
+    model = Cliente
+    template_name = 'cliente_delete.html'
     success_url = reverse_lazy('clientes')
