@@ -49,14 +49,17 @@ class ClienteForm(forms.ModelForm):
         cliente.razao_social = self.cleaned_data['razao_social'].upper()
         cliente.responsavel_tecnico = self.cleaned_data['responsavel_tecnico'].upper()
         
-        cliente.status = 'Em análise'
+        if cliente.status == None:
+            cliente.status = 'Em análise'
         if commit:
             cliente.save()
         return cliente
     
     def clean_cnpj(self):
         cnpj = self.cleaned_data['cnpj']
-        if Cliente.objects.filter(cnpj=cnpj).exists():
+        cliente_id = self.instance.pk
+        
+        if Cliente.objects.filter(cnpj=cnpj).exclude(pk=cliente_id).exists():
             raise forms.ValidationError('O CNPJ informado já existe na base de dados.')
         
         return cnpj
