@@ -48,6 +48,10 @@
             opacity: 0;
         }
 
+        .sidebar.collapsed p {
+            opacity: 0;
+        }
+
         .sidebar .menu {
             display: flex;
             flex-direction: column;
@@ -162,7 +166,9 @@
         }
 
         .actions input[type="text"] {
-            padding: 8px 22px 8px 22px;
+            width: 18rem;
+            text-align: left;
+            padding: 0.3rem 0.6rem 0.3rem 0.6rem;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -338,6 +344,9 @@
         <span class="material-icons toggle-btn" onclick="toggleSidebar()">chevron_left</span>
         <span class="logo">FiscoAlert</span>
         <div class="menu">
+            {% if user.is_authenticated %}
+                <p>Olá, {{ user.username }}</p>
+            {% endif %}
             <a href="#">
                 <span class="material-icons">home</span>
                 <span class="text">Início</span>

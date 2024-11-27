@@ -26,7 +26,8 @@ class ClienteForm(forms.ModelForm):
             'razao_social', 
             'cnpj', 
             'responsavel_tecnico', 
-            'email', 
+            'email',
+            'tipo_empresa',
             'regime_fiscal', 
             'telefone'
         ]
@@ -36,6 +37,7 @@ class ClienteForm(forms.ModelForm):
             'cnpj': "CNPJ",
             'responsavel_tecnico': "Responsável",
             'email': "E-mail",
+            'tipo_empresa': "Tipo da Empresa",
             'regime_fiscal': "Regime Fiscal",
             'telefone': "Telefone"
         }

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block page_title %}
     Detalhes do cliente - FiscoAlert
 {% endblock %}
@@ -13,6 +14,7 @@
         <p><strong>Responsável: </strong>{{ object.responsavel_tecnico }}</p>
         <p><strong>E-mail: </strong>{{ object.email}}</p>
         <p><strong>Telefone: </strong>{{ object.telefone }}</p>
+        <p><strong>Tipo de empresa: </strong>{{ object.tipo_empresa }}</p>
         <p><strong>Regime Fiscal: </strong>{{ object.regime_fiscal }}</p>
         <p><strong>Data de inclusão na receita: </strong>{{ object.data_inclusao }}</p>
         <p><strong>Data de exclusão na receita: </strong>{{ object.data_exclusao }}</p>
