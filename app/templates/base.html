@@ -303,7 +303,7 @@
         }
 
         .botao-excluir {
-            
+
             padding: 8px 16px;
             font-size: 16px;
             color: #ffffff;
@@ -315,6 +315,11 @@
 
         .botao-excluir:hover {
             background-color: #d43030;
+        }
+
+        .detalhes-header {
+            display: flex;
+            justify-content: space-between;
         }
 
         .container-detalhes p {
@@ -333,6 +338,35 @@
             text-decoration: none;
         }
 
+        /* estilo das etiquetas */
+
+        .ativo {
+            background-color: green;
+            color: white;
+            width: 8rem;
+            height: 2rem;
+            padding: 0.5rem 0.5rem;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .inativo {
+            background-color: red;
+            color: white;
+            width: 8rem;
+            height: 2rem;
+            padding: 0.5rem 0.5rem;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -345,7 +379,7 @@
         <span class="logo">FiscoAlert</span>
         <div class="menu">
             {% if user.is_authenticated %}
-                <p>Olá, {{ user.username }}</p>
+            <p>Olá, {{ user.username }}</p>
             {% endif %}
             <a href="#">
                 <span class="material-icons">home</span>
@@ -377,7 +411,7 @@
         function toggleSidebar() {
             var sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("collapsed");
-            
+
             // Salva o estado no localStorage
             if (sidebar.classList.contains("collapsed")) {
                 localStorage.setItem("sidebarCollapsed", "true");
@@ -385,9 +419,9 @@
                 localStorage.setItem("sidebarCollapsed", "false");
             }
         }
-    
+
         // Ao carregar a página, aplica o estado salvo
-        window.onload = function() {
+        window.onload = function () {
             var sidebar = document.getElementById("sidebar");
             if (localStorage.getItem("sidebarCollapsed") === "true") {
                 sidebar.classList.add("collapsed");

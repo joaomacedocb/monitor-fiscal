@@ -7,7 +7,15 @@
 {% block content %}
 <div class="content">
     <div class="container container-detalhes">
-        <div class="title">Detahes cliente. Cód.: {{ object.id }}</div>
+        <div class="detalhes-header">
+            <div class="title">Detahes cliente. Cód.: {{ object.id }}</div>
+            <div class="{% if object.ativo %}ativo{% else %}inativo{% endif %}">Ficha 
+                {% if object.ativo == True %}Ativa
+                {% else %}Inativa
+                {% endif %}
+            </div>
+        </div>
+
         <p><strong>CNPJ: </strong>{{ object.cnpj }}</p>
         <p><strong>Razão social: </strong>{{ object.razao_social }}</p>
         <p><strong>Nome fantasia: </strong>{{ object.nome_fantasia }}</p>

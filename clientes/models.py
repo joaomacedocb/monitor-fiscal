@@ -46,6 +46,7 @@ class Cliente(models.Model):
             )
         ]
     )
+    ativo = models.BooleanField(default=True)
     escritorio = models.ForeignKey(Escritorio, on_delete=models.PROTECT, related_name='escritorio', blank= True, null= True)
     
     def __str__(self):

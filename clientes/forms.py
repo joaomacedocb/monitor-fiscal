@@ -29,7 +29,8 @@ class ClienteForm(forms.ModelForm):
             'email',
             'tipo_empresa',
             'regime_fiscal', 
-            'telefone'
+            'telefone',
+            'ativo',
         ]
         labels = {
             'nome_fantasia': "Nome Fantasia",
@@ -39,7 +40,8 @@ class ClienteForm(forms.ModelForm):
             'email': "E-mail",
             'tipo_empresa': "Tipo da Empresa",
             'regime_fiscal': "Regime Fiscal",
-            'telefone': "Telefone"
+            'telefone': "Telefone",
+            'ativo': "Ativo"
         }
 
     def save(self, commit=True):
