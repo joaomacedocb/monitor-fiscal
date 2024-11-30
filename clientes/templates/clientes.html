@@ -38,8 +38,9 @@
                         <th>CNPJ</th>
                         <th>NOME</th>
                         <th>CONTATO</th>
+                        <th>ATIVO</th>
                         <th>ÚLTIMA CONSULTA</th>
-                        <th>STATUS</th>
+                        <th>STATUS RECEITA</th>
                         <th>-</th>
                     </tr>
                 </thead>
@@ -49,7 +50,15 @@
                         <td>{{ cliente.id }}</td>
                         <td>{{ cliente.cnpj }}</td>
                         <td>{{ cliente.nome_fantasia }}</td>
-                        <td>{{ cliente.telefone }}<br>{{ cliente.email }}</td>
+                        <td>
+                            {{ cliente.telefone }}<br>{{ cliente.email }}</td>
+                        <td>
+                            {% if cliente.ativo == True %}
+                            Sim
+                            {% else %}
+                            Não
+                            {% endif %}
+                        </td>
                         <td>
                             {% if cliente.ultima_atualizacao %}
                                 {{ cliente.ultima_atualizacao }}

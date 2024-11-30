@@ -9,9 +9,9 @@
     <div class="container container-detalhes">
         <div class="detalhes-header">
             <div class="title">Detahes cliente. Cód.: {{ object.id }}</div>
-            <div class="{% if object.ativo %}ativo{% else %}inativo{% endif %}">Ficha 
-                {% if object.ativo == True %}Ativa
-                {% else %}Inativa
+            <div class="{% if object.ativo %}ativo{% else %}inativo{% endif %}">Ativo: 
+                {% if object.ativo == True %}Sim
+                {% else %}Não
                 {% endif %}
             </div>
         </div>
