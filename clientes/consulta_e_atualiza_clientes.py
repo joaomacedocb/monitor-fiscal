@@ -20,7 +20,7 @@ def consulta_e_atualiza_clientes():
                     simples_info = data.get("simples", {})
                     optante_simples = simples_info.get("simples", "Não")
                     
-                    cliente.status = "Ativo" if optante_simples == "Sim" else "Inativo"
+                    cliente.status = "Regular" if optante_simples == "Sim" else "Irregular"
                     cliente.ultima_atualizacao = timezone.now()
                     data_inclusao_str = simples_info.get("data_opcao_simples")
                     data_exclusao_str = simples_info.get("data_exclusao_simples")
@@ -48,7 +48,7 @@ def consulta_e_atualiza_clientes():
                     mei_info = data.get("simples", {})
                     optante_mei = mei_info.get("mei", "Não")
                     
-                    cliente.status = "Ativo" if optante_mei == "Sim" else "Inativo"
+                    cliente.status = "Regular" if optante_mei == "Sim" else "Irregular"
                     cliente.ultima_atualizacao = timezone.now()
                     
                     data_inclusao_str = mei_info.get("data_opcao_mei")
