@@ -11,7 +11,17 @@
         <p>Esta é a lista de clientes cadastrados. Você pode utilizar os filtros para filtrar os dados.</p>
         <div class="actions">
             <form method="GET" action="">
-                <input type="text" name="search" placeholder="Digite o nome ou CNPJ" value="{{ request.GET.search }}">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="Digite o nome ou CNPJ" 
+                    value="{{ request.GET.search }}"
+                >
+                <select name="status">
+                    <option value="" {% if not request.GET.status %}selected{% endif %}>Todos</option>
+                    <option value="ativo" {% if request.GET.status == 'ativo' %}selected{% endif %}>Ativo</option>
+                    <option value="inativo" {% if request.GET.status == 'inativo' %}selected{% endif %}>Inativo</option>
+                </select>
                 <button type="submit">Buscar</button>
             </form>
             <div>

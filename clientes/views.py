@@ -7,14 +7,22 @@ from clientes.models import Cliente
 from clientes.forms import ClienteForm
 from django.views.generic import DetailView, UpdateView, DeleteView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
+from django.db.models import Q
 
 @login_required
 def clientes_view(request):
     clientes = Cliente.objects.all().order_by('nome_fantasia')
-    search = request.GET.get('search')
+    
+    search = request.GET.get('search', '')
+    status = request.GET.get('status', '')
     
     if search:
-        clientes = clientes.filter(nome_fantasia__icontains = search)
+        clientes = clientes.filter(Q(nome_fantasia__icontains = search) | Q(cnpj__icontains = search))
+    
+    if status == 'ativo':
+        clientes = clientes.filter(ativo=True)
+    elif status == 'inativo':
+        clientes = clientes.filter(ativo=False)
         
     return render(request, 'clientes.html', {'clientes': clientes})
 
