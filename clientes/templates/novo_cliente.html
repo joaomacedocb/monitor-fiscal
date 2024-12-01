@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    Adicionar cliente - FiscoAlert
+Adicionar cliente - FiscoAlert
 {% endblock %}
 
 {% block content %}
@@ -9,22 +9,96 @@
     <div class="container">
         <div class="title">Novo Cliente</div>
         <p>Insira abaixo as informações do novo cliente que está sendo cadastrado.</p>
-        <form method="post" enctype="multipart/form-data">
-            {% if form.errors %}
-            <ul>
-                {% for field, errors in form.errors.items %}
-                <li>{{ field }}: {{ errors }}</li>
+        <form method="post" enctype="multipart/form-data" class="formulario-cliente">
+            {% if novo_cliente_form.cnpj.errors %}
+            <ul class="error-list">
+                {% for error in novo_cliente_form.cnpj.errors %}
+                <li>{{ error }}</li>
                 {% endfor %}
             </ul>
             {% endif %}
             {% csrf_token %}
-            <table class="tabela-adicionar-clientes">
-                {{ novo_cliente_form.as_table }}
-            </table>
-            <input type="submit" value="Cadastrar cliente" class="botao-primario">
-            <a href="{% url 'clientes' %}" class="botao-secundario">Voltar</a>
+            
+            <div class="form-group">
+                {{ novo_cliente_form.cnpj.label_tag }}
+                <div class="input-group">
+                    {{ novo_cliente_form.cnpj }}
+                    <button type="button" id="buscar-cnpj" class="botao-primario">Buscar</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.nome_fantasia.label_tag }}
+                {{ novo_cliente_form.nome_fantasia }}
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.razao_social.label_tag }}
+                {{ novo_cliente_form.razao_social }}
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.responsavel_tecnico.label_tag }}
+                {{ novo_cliente_form.responsavel_tecnico }}
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.email.label_tag }}
+                {{ novo_cliente_form.email }}
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.tipo_empresa.label_tag }}
+                {{ novo_cliente_form.tipo_empresa }}
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.regime_fiscal.label_tag }}
+                {{ novo_cliente_form.regime_fiscal }}
+            </div>
+
+            <div class="form-group">
+                {{ novo_cliente_form.telefone.label_tag }}
+                {{ novo_cliente_form.telefone }}
+            </div>
+
+            <div class="form-group-status">
+                {{ novo_cliente_form.ativo.label_tag }}
+                {{ novo_cliente_form.ativo }}
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Cadastrar cliente" class="botao-primario">
+                <a href="{% url 'clientes' %}" class="botao-secundario">Voltar</a>
+            </div>
         </form>
     </div>
 </div>
+<script>
+    document.getElementById('buscar-cnpj').addEventListener('click', async function () {
+        const cnpj = document.getElementById('id_cnpj').value;
+        if (!cnpj) {
+            alert('Por favor, insira um CNPJ válido.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/buscar-cnpj/?cnpj=${cnpj}`);
+            if (!response.ok) {
+                throw new Error('Erro ao buscar os dados do CNPJ.');
+            }
+            const data = await response.json();
+
+            document.getElementById('id_nome_fantasia').value = data.estabelecimento.nome_fantasia || '';
+            document.getElementById('id_razao_social').value = data.razao_social || '';
+            document.getElementById('id_responsavel_tecnico').value = data.responsavel || '';
+            document.getElementById('id_email').value = data.estabelecimento.email || '';
+            document.getElementById('id_telefone').value = `${data.estabelecimento.ddd1 || ''}${data.estabelecimento.telefone1 || ''}`;
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao buscar os dados do CNPJ.');
+        }
+    });
+</script>
 
 {% endblock %}

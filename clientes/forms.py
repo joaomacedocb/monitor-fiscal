@@ -22,9 +22,9 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = [
+            'cnpj', 
             'nome_fantasia', 
             'razao_social', 
-            'cnpj', 
             'responsavel_tecnico', 
             'email',
             'tipo_empresa',
@@ -33,9 +33,9 @@ class ClienteForm(forms.ModelForm):
             'ativo',
         ]
         labels = {
+            'cnpj': "CNPJ",
             'nome_fantasia': "Nome Fantasia",
             'razao_social': "Razão Social",
-            'cnpj': "CNPJ",
             'responsavel_tecnico': "Responsável",
             'email': "E-mail",
             'tipo_empresa': "Tipo da Empresa",
