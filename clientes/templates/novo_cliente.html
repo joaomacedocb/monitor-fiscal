@@ -29,17 +29,17 @@ Adicionar cliente - FiscoAlert
 
             {% for field in novo_cliente_form %}
             {% if field.name != "cnpj" %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {{ field }}
-                    {% if field.errors %}
-                    <ul class="error-list">
-                        {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
             {% endif %}
             {% endfor %}
 
@@ -70,6 +70,15 @@ Adicionar cliente - FiscoAlert
             document.getElementById('id_responsavel_tecnico').value = data.responsavel || '';
             document.getElementById('id_email').value = data.estabelecimento.email || '';
             document.getElementById('id_telefone').value = `${data.estabelecimento.ddd1 || ''}${data.estabelecimento.telefone1 || ''}`;
+
+            const regimeFiscalSelect = document.getElementById('id_regime_fiscal');
+
+            if (data.regime_fiscal) {
+                regimeFiscalSelect.value = data.regime_fiscal;
+            } else {
+                regimeFiscalSelect.value = '';
+            }
+
         } catch (error) {
             console.error(error);
             alert('Erro ao buscar os dados do CNPJ.');

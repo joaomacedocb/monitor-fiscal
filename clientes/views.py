@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 import requests
-from clientes.models import Cliente
+from clientes.models import Cliente, RegimeFiscal
 from clientes.forms import ClienteForm
 from django.views.generic import DetailView, UpdateView, DeleteView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
@@ -65,6 +65,10 @@ def buscar_cnpj(request):
         
         data = resp.json()
         
+        simples = data.get('simples', {})
+        regime_simples = simples.get('simples', 'Não')
+        regime_mei = simples.get('mei', 'Não')
+        
         razao_social = data.get("razao_social", "Não informado")
         estabelecimento = data.get('estabelecimento', {})
         nome_fantasia = estabelecimento.get("nome_fantasia") or data.get("razao_social") or "Não informado"
@@ -79,6 +83,13 @@ def buscar_cnpj(request):
         else:
             responsavel = "Não informado"
             
+        if regime_simples == "Sim" and regime_mei == "Sim":
+            regime_fiscal_id = 4  # SIMEI
+        elif regime_simples == "Sim" and regime_mei == "Não":
+            regime_fiscal_id = 1  # SIMPLES NACIONAL
+        else:
+            regime_fiscal_id = None
+            
         dados = {
         "razao_social": razao_social,
         "estabelecimento": {
@@ -86,7 +97,8 @@ def buscar_cnpj(request):
             "email": email,
             "telefone1": ddd + telefone,
         },
-        "responsavel": responsavel
+        "responsavel": responsavel,
+        "regime_fiscal": regime_fiscal_id,
         }
         
         return JsonResponse(dados)    
