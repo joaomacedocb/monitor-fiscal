@@ -26,7 +26,7 @@
             </form>
             <div>
                 <a href="{% url 'novo_cliente' %}" class="add-client-btn"><button >Adicionar Cliente</button></a>
-                <a href="{% url 'atualizar_clientes' %}" class="update-clients-btn"><button type="button">Atualizar CNPJs</button></a>
+                <a href="{% url 'atualizar_clientes' %}" id="update-clients-btn" class="update-clients-btn"><button type="button">Atualizar CNPJs</button></a>
             </div>
         </div>
 
@@ -86,16 +86,30 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <div id="loading-message" style="display: none; text-align: center; font-weight: bold;">
+                Realizando a consulta...
+            </div>
         {% else %}
             <div class="placeholder-clientes">
                 <div class="material-icons">search_off</div>
                 <h3>Não há clientes cadastrados. Clique em "Adicionar cliente" para iniciar um cadastro.</h3>
             </div>
-
         {% endif %}
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const updateButton = document.getElementById('update-clients-btn');
+        const loadingMessage = document.getElementById('loading-message');
 
+        updateButton.addEventListener('click', function (event) {
+
+            event.preventDefault();
+            loadingMessage.style.display = 'block';
+            window.location.href = updateButton.href;
+        });
+    });
+</script>
 
 {% endblock %}
