@@ -17,6 +17,9 @@ Adicionar cliente - FiscoAlert
                 {% endfor %}
             </ul>
             {% endif %}
+            <div id="loading-message" style="display: none; text-align: center; font-weight: bold;">
+                Realizando a consulta...
+            </div>
             {% csrf_token %}
 
             <div class="form-group">
@@ -53,10 +56,14 @@ Adicionar cliente - FiscoAlert
 <script>
     document.getElementById('buscar-cnpj').addEventListener('click', async function () {
         const cnpj = document.getElementById('id_cnpj').value;
+        const loadingMessage = document.getElementById('loading-message');
+
         if (!cnpj) {
             alert('Por favor, insira um CNPJ válido.');
             return;
         }
+
+        loadingMessage.style.display = 'block';
 
         try {
             const response = await fetch(`/api/buscar-cnpj/?cnpj=${cnpj}`);
@@ -90,6 +97,8 @@ Adicionar cliente - FiscoAlert
         } catch (error) {
             console.error(error);
             alert('Erro ao buscar os dados do CNPJ.');
+        } finally {
+            loadingMessage.style.display = 'none';
         }
     });
 </script>
