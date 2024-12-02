@@ -79,6 +79,14 @@ Adicionar cliente - FiscoAlert
                 regimeFiscalSelect.value = '';
             }
 
+            const tipoEmpresaSelect = document.getElementById('id_tipo_empresa');
+
+            if (data.tipo_empresa) {
+                tipoEmpresaSelect.value = data.tipo_empresa;
+            } else {
+                tipoEmpresaSelect.value = '';
+            }
+
         } catch (error) {
             console.error(error);
             alert('Erro ao buscar os dados do CNPJ.');

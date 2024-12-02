@@ -66,13 +66,18 @@ def buscar_cnpj(request):
         data = resp.json()
         
         simples = data.get('simples', {})
+        
         regime_simples = simples.get('simples', 'Não')
         regime_mei = simples.get('mei', 'Não')
+        
+        porte = data.get('porte', {})
+        
+        consulta_porte = porte.get('id', None)
         
         razao_social = data.get("razao_social", "Não informado")
         estabelecimento = data.get('estabelecimento', {})
         nome_fantasia = estabelecimento.get("nome_fantasia") or data.get("razao_social") or "Não informado"
-        email = estabelecimento.get("email", "Não informado")
+        email = estabelecimento.get("email") or "Não informado"
         ddd = estabelecimento.get("ddd1", "00")
         telefone = estabelecimento.get("telefone1", "000000000")
     
@@ -90,6 +95,15 @@ def buscar_cnpj(request):
         else:
             regime_fiscal_id = None
             
+        if consulta_porte == "01":
+            tipo_empresa_id = 2 # MICRO EMPRESA
+        elif consulta_porte == "03":
+            tipo_empresa_id = 3 # EMPRESA PEQUENO PORTE
+        else:
+            tipo_empresa_id = None
+            
+            
+            
         dados = {
         "razao_social": razao_social,
         "estabelecimento": {
@@ -98,6 +112,7 @@ def buscar_cnpj(request):
             "telefone1": ddd + telefone,
         },
         "responsavel": responsavel,
+        "tipo_empresa": tipo_empresa_id,
         "regime_fiscal": regime_fiscal_id,
         }
         
