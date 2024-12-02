@@ -54,31 +54,32 @@ def buscar_cnpj(request):
     if not cnpj:
         return JsonResponse({'error': 'CNPJ não fornecido.'}, status=400)
     
+    if not cnpj.isdigit() or len(cnpj) != 14:
+        return JsonResponse({'error': 'CNPJ fornecido não está no formato correto.'}, status=400)
+    
     url = f'https://publica.cnpj.ws/cnpj/{cnpj}'
     
     try:
-        resp = requests.get(url)
+        resp = requests.get(url, timeout=10)
+        resp.raise_for_status()
         
-        if resp.status_code == 200:
-            
-            data = resp.json()
-            razao_social = data.get("razao_social")
-            estabelecimento = data.get('estabelecimento', {})
-            nome_fantasia = estabelecimento.get("nome_fantasia")
-            email = estabelecimento.get("email")
-            ddd = estabelecimento.get("ddd1")
-            telefone = estabelecimento.get("telefone1")
-            
-            socios = data.get("socios", [])
-            if socios and isinstance(socios, list):
-                responsavel = socios[0].get("nome", "Não informado")
-            else:
-                responsavel = "Não informado"
+        data = resp.json()
         
-    except:
-        ...
-
-    dados = {
+        razao_social = data.get("razao_social", "Não informado")
+        estabelecimento = data.get('estabelecimento', {})
+        nome_fantasia = estabelecimento.get("nome_fantasia") or data.get("razao_social") or "Não informado"
+        email = estabelecimento.get("email", "Não informado")
+        ddd = estabelecimento.get("ddd1", "00")
+        telefone = estabelecimento.get("telefone1", "000000000")
+    
+        socios = data.get("socios", [])
+        
+        if socios and isinstance(socios, list):
+            responsavel = socios[0].get("nome", "Não informado")
+        else:
+            responsavel = "Não informado"
+            
+        dados = {
         "razao_social": razao_social,
         "estabelecimento": {
             "nome_fantasia": nome_fantasia,
@@ -86,9 +87,20 @@ def buscar_cnpj(request):
             "telefone1": ddd + telefone,
         },
         "responsavel": responsavel
-    }
+        }
+        
+        return JsonResponse(dados)    
+        
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'error': 'Erro ao consultar o CNPJ. Tente novamente mais tarde.'}, status=500)
 
-    return JsonResponse(dados)
+    except KeyError as e:
+        return JsonResponse({'error': f'Erro ao processar a resposta: campo {str(e)} não encontrado.'}, status=500)
+
+    except Exception as e:
+        return JsonResponse({'error': 'Erro inesperado. Contate o suporte.'}, status=500)
+
+    
 
 @method_decorator(login_required, name='dispatch')
 class ClienteDetailView(DetailView):

@@ -19,18 +19,28 @@ Adicionar cliente - FiscoAlert
             {% endif %}
             {% csrf_token %}
 
-            {% for field in novo_cliente_form %}
             <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                <ul class="error-list">
-                    {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                {{ novo_cliente_form.cnpj.label_tag }}
+                <div class="input-group">
+                    {{ novo_cliente_form.cnpj }}
+                    <button type="button" id="buscar-cnpj" class="botao-primario">Buscar</button>
+                </div>
             </div>
+
+            {% for field in novo_cliente_form %}
+            {% if field.name != "cnpj" %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                    <ul class="error-list">
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            {% endif %}
             {% endfor %}
 
             <div class="form-actions">
