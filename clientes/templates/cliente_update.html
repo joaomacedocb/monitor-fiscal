@@ -1,29 +1,106 @@
 {% extends "base.html" %}
-{% block page_title %}
-    Atualização de cliente - FiscoAlert
-{% endblock %}
-{% block content %}
 
+{% block page_title %}
+    Atualizar cliente - FiscoAlert
+{% endblock %}
+
+{% block content %}
 <div class="content">
     <div class="container">
-        <div class="title">Editar Cliente</div>
-        <p>Nesta página você poderá atualizar os dados do cliente abaixo.</p>
-        <form method="post" enctype="multipart/form-data">
+        <div class="title">Atualizar Cliente</div>
+        <p>Atualize abaixo as informações do cliente.</p>
+        <form method="post" enctype="multipart/form-data" class="formulario-cliente">
             {% if form.errors %}
-            <ul>
+            <ul class="error-list">
                 {% for field, errors in form.errors.items %}
                 <li>{{ field }}: {{ errors }}</li>
                 {% endfor %}
             </ul>
             {% endif %}
+            
+            <div id="loading-message" style="display: none; text-align: center; font-weight: bold;">
+                Realizando a consulta...
+            </div>
             {% csrf_token %}
-            <table class="tabela-adicionar-clientes">
-                {{ form.as_table }}
-            </table>
-            <input type="submit" value="Salvar alterações" class="botao-primario">
-            <a href="{% url 'cliente_detalhe' pk=cliente.pk %}" class="botao-secundario">Voltar</a>
+            
+            <div class="form-group">
+                {{ form.cnpj.label_tag }}
+                <div class="input-group">
+                    {{ form.cnpj }}
+                    <button type="button" id="buscar-cnpj" class="botao-primario">Buscar</button>
+                </div>
+            </div>
+
+            {% for field in form %}
+            {% if field.name != "cnpj" %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <div class="form-actions">
+                <input type="submit" value="Salvar alterações" class="botao-primario">
+                <a href="{% url 'clientes' %}" class="botao-secundario">Voltar</a>
+            </div>
         </form>
     </div>
 </div>
+<script>
+    document.getElementById('buscar-cnpj').addEventListener('click', async function () {
+        const cnpj = document.getElementById('id_cnpj').value;
+        const loadingMessage = document.getElementById('loading-message');
 
+        if (!cnpj) {
+            alert('Por favor, insira um CNPJ válido.');
+            return;
+        }
+
+        loadingMessage.style.display = 'block';
+
+        try {
+            const response = await fetch(`/api/buscar-cnpj/?cnpj=${cnpj}`);
+            if (!response.ok) {
+                throw new Error('Erro ao buscar os dados do CNPJ.');
+            }
+            const data = await response.json();
+
+            document.getElementById('id_nome_fantasia').value = data.estabelecimento.nome_fantasia || '';
+            document.getElementById('id_razao_social').value = data.razao_social || '';
+            document.getElementById('id_responsavel_tecnico').value = data.responsavel || '';
+            document.getElementById('id_email').value = data.estabelecimento.email || '';
+            document.getElementById('id_telefone').value = `${data.estabelecimento.ddd1 || ''}${data.estabelecimento.telefone1 || ''}`;
+
+            const regimeFiscalSelect = document.getElementById('id_regime_fiscal');
+
+            if (data.regime_fiscal) {
+                regimeFiscalSelect.value = data.regime_fiscal;
+            } else {
+                regimeFiscalSelect.value = '';
+            }
+
+            const tipoEmpresaSelect = document.getElementById('id_tipo_empresa');
+
+            if (data.tipo_empresa) {
+                tipoEmpresaSelect.value = data.tipo_empresa;
+            } else {
+                tipoEmpresaSelect.value = '';
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao buscar os dados do CNPJ.');
+        } finally {
+            loadingMessage.style.display = 'none';
+        }
+    });
+</script>
 {% endblock %}
