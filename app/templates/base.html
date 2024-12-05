@@ -17,7 +17,7 @@
 
         .sidebar {
             width: 250px;
-            background-color: #333;
+            background: linear-gradient(135deg, #001f3f, #004080);
             color: white;
             display: flex;
             align-items: flex-start;
@@ -37,7 +37,6 @@
 
         .sidebar .logo {
             font-size: 24px;
-            font-weight: bold;
             margin-bottom: 30px;
             white-space: nowrap;
             overflow: hidden;
@@ -449,7 +448,7 @@
     <nav class="sidebar collapsed" id="sidebar">
         <!-- Botão de expandir/recolher -->
         <span class="material-icons toggle-btn" onclick="toggleSidebar()">chevron_left</span>
-        <span class="logo">FiscoAlert</span>
+        <span class="logo"><strong>Fisco</strong>Alert</span>
         <div class="menu">
             {% if user.is_authenticated %}
             <p>Olá, {{ user.username }}</p>
