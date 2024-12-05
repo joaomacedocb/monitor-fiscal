@@ -11,8 +11,8 @@ def cliente_post_save(sender, instance, **kwargs):
         ConsultaHistorico.objects.create(
             cnpj=instance.cnpj,
             regime_fiscal=instance.regime_fiscal.nome if instance.regime_fiscal else None,
-            tipo_empresa=instance.tipo_empresa,
+            tipo_empresa=instance.tipo_empresa.nome if instance.tipo_empresa else None,
             data_inclusao=instance.data_inclusao,
             data_exclusao=instance.data_exclusao,
-            escritorio=instance.escritorio
+            escritorio=instance.escritorio.nome if instance.escritorio else None,
         )

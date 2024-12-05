@@ -55,11 +55,11 @@ class Cliente(models.Model):
 class ConsultaHistorico(models.Model):
     cnpj = models.CharField(max_length=14, verbose_name="CNPJ", db_index=True)
     regime_fiscal = models.CharField(max_length=100, verbose_name="Regime Fiscal", blank=True, null=True)
-    tipo_empresa = models.ForeignKey(TipoEmpresa, on_delete=models.PROTECT, related_name='tipo_empresa_historico', blank= True, null= True)
+    tipo_empresa = models.CharField(max_length=100, verbose_name="Tipo Empresa", blank= True, null= True)
     data_inclusao = models.DateField(blank= True, null= True)
     data_exclusao = models.DateField(blank= True, null= True)
     data_consulta = models.DateTimeField(auto_now_add=True, verbose_name="Data da Consulta")
-    escritorio = models.ForeignKey(Escritorio, on_delete=models.PROTECT, related_name='escritorio_historico', blank= True, null= True)
+    escritorio = models.CharField(max_length=100, verbose_name="Escritorio", blank= True, null = True)
 
     class Meta:
         verbose_name = "Histórico de Consulta"
