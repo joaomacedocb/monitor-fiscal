@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'escritorio',
     'clientes',
     'contas',
+    'inicio',
 ]
 
 MIDDLEWARE = [
