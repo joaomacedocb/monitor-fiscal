@@ -476,6 +476,31 @@
             background: #f1f1f1;
         }
 
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pagination .step-links a {
+            margin: 0 5px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .pagination .step-links a:hover {
+            background-color: #f1f1f1;
+            color: #0056b3;
+        }
+
+        .pagination .step-links span {
+            margin: 0 5px;
+            padding: 8px 16px;
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -490,7 +515,7 @@
             {% if user.is_authenticated %}
             <p>Olá, {{ user.username }}</p>
             {% endif %}
-            <a href="#">
+            <a href="{% url 'inicio' %}">
                 <span class="material-icons">home</span>
                 <span class="text">Início</span>
             </a>

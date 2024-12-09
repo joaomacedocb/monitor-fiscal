@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from clientes.models import ConsultaHistorico
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def inicio_view(request):
     total_consultas = ConsultaHistorico.objects.count()
     total_exclusoes = ConsultaHistorico.objects.filter(data_exclusao__isnull=False).count()
