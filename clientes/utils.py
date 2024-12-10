@@ -1,5 +1,5 @@
 from functools import wraps
-from django.http import HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden
 from django.core.exceptions import PermissionDenied
 
 
@@ -13,7 +13,42 @@ def filtrar_clientes_por_escritorio(view_func):
 
         escritorio = getattr(request.user, 'escritorio', None)
         if not escritorio:
-            return HttpResponseForbidden("Usuário não pertence a nenhum escritório.")
+            return HttpResponse("""
+        <html>
+            <head>
+                <style>
+                    body {
+                        background-color: #721c24;
+                        color: white;
+                        font-family: Arial, sans-serif;
+                        text-align: center;
+                        padding-top: 100px;
+                    }
+                    h1 {
+                        font-size: 24px;
+                    }
+                    .btn-voltar {
+                        background-color: lightgrey;
+                        color: #721c24;
+                        border: none;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        margin-top: 20px;
+                        text-decoration: none;
+                        border-radius: 5px;
+                    }
+                    .btn-voltar:hover {
+                        background-color: #f5c6cb;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>O usuário deve ser associado à um escritório. Verifique com o Administrador do sistema.</h1>
+                <a href="javascript:window.history.back();" class="btn-voltar">Voltar</a>
+            </body>
+        </html>
+    """)
 
         request.clientes = Cliente.objects.filter(escritorio=escritorio)
         return view_func(request, *args, **kwargs)
