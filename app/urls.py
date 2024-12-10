@@ -7,7 +7,7 @@ from inicio.views import inicio_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('escritorio/<int:id>/', escritorio_detalhes, name='escritorio_detalhes'),
+    path('escritorio/', escritorio_detalhes, name='escritorio_detalhes'),
     path('clientes/', clientes_view, name='clientes'),
     path('novo_cliente/', novo_cliente_view, name='novo_cliente'),
     path('atualizar-clientes/', atualizar_clientes_view, name='atualizar_clientes'),
