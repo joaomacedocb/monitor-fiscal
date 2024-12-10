@@ -36,7 +36,9 @@ def novo_cliente_view(request):
     if request.method == 'POST':
         novo_cliente_form = ClienteForm(request.POST)
         if novo_cliente_form.is_valid():
-            novo_cliente_form.save()
+            cliente = novo_cliente_form.save(commit = False)
+            cliente.escritorio = request.user.escritorio
+            cliente.save()
             return redirect('clientes')
     else:
         novo_cliente_form = ClienteForm()
