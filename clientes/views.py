@@ -10,15 +10,19 @@ from django.views.generic import DetailView, UpdateView, DeleteView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
 from django.db.models import Q
 
+from clientes.utils import EscritorioRestritoMixin, filtrar_clientes_por_escritorio
+
+@filtrar_clientes_por_escritorio
 @login_required
 def clientes_view(request):
-    clientes = Cliente.objects.all().order_by('nome_fantasia')
+
+    clientes = request.clientes.order_by('nome_fantasia')
     
     search = request.GET.get('search', '')
     status = request.GET.get('status', '')
     
     if search:
-        clientes = clientes.filter(Q(nome_fantasia__icontains = search) | Q(cnpj__icontains = search))
+        clientes = clientes.filter(Q(nome_fantasia__icontains=search) | Q(cnpj__icontains=search))
     
     if status == 'ativo':
         clientes = clientes.filter(ativo=True)
@@ -127,22 +131,20 @@ def buscar_cnpj(request):
     except Exception as e:
         return JsonResponse({'error': 'Erro inesperado. Contate o suporte.'}, status=500)
 
-    
-
 @method_decorator(login_required, name='dispatch')
-class ClienteDetailView(DetailView):
+class ClienteDetailView(EscritorioRestritoMixin, DetailView):
     model = Cliente
     template_name = 'cliente_detalhe.html'
 
 @method_decorator(login_required, name='dispatch')
-class ClienteUpdateView(UpdateView):
+class ClienteUpdateView(EscritorioRestritoMixin, UpdateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'cliente_update.html'
     success_url = reverse_lazy('clientes')
 
 @method_decorator(login_required, name='dispatch')
-class ClienteDeleteView(DeleteView):
+class ClienteDeleteView(EscritorioRestritoMixin, DeleteView):
     model = Cliente
     template_name = 'cliente_delete.html'
     success_url = reverse_lazy('clientes')
