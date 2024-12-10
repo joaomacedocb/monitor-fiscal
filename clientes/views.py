@@ -89,16 +89,16 @@ def buscar_cnpj(request):
             responsavel = "Não informado"
             
         if regime_simples == "Sim" and regime_mei == "Sim":
-            regime_fiscal_id = 4  # SIMEI
+            regime_fiscal_id = 2  # SIMEI
         elif regime_simples == "Sim" and regime_mei == "Não":
             regime_fiscal_id = 1  # SIMPLES NACIONAL
         else:
             regime_fiscal_id = None
             
         if consulta_porte == "01":
-            tipo_empresa_id = 2 # MICRO EMPRESA
+            tipo_empresa_id = 1 # MICRO EMPRESA
         elif consulta_porte == "03":
-            tipo_empresa_id = 3 # EMPRESA PEQUENO PORTE
+            tipo_empresa_id = 2 # EMPRESA PEQUENO PORTE
         else:
             tipo_empresa_id = None
             

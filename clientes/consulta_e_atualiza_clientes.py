@@ -21,7 +21,7 @@ def consulta_e_atualiza_clientes():
                     cliente.status = "Regular" if optante_simples == "Sim" else "Irregular"
                     cliente.data_inclusao = parse_date(simples_info.get("data_opcao_simples"))
                     cliente.data_exclusao = parse_date(simples_info.get("data_exclusao_simples"))
-                elif cliente.regime_fiscal.id == 4:
+                elif cliente.regime_fiscal.id == 2:
                     optante_mei = simples_info.get("mei", "Não")
                     cliente.status = "Regular" if optante_mei == "Sim" else "Irregular"
                     cliente.data_inclusao = parse_date(simples_info.get("data_opcao_mei"))
