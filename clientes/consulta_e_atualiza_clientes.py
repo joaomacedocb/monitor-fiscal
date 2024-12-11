@@ -16,17 +16,18 @@ def consulta_e_atualiza_clientes():
                 data = resp.json()
                 simples_info = data.get("simples", {})
                 
-                if cliente.regime_fiscal.id == 1:
-                    optante_simples = simples_info.get("simples", "Não")
-                    cliente.status = "Regular" if optante_simples == "Sim" else "Irregular"
-                    cliente.data_inclusao = parse_date(simples_info.get("data_opcao_simples"))
-                    cliente.data_exclusao = parse_date(simples_info.get("data_exclusao_simples"))
-                elif cliente.regime_fiscal.id == 2:
+                if simples_info:
+                    if cliente.regime_fiscal and cliente.regime_fiscal.id == 1:
+                        optante_simples = simples_info.get("simples", "Não")
+                        cliente.status = "Regular" if optante_simples == "Sim" else "Irregular"
+                        cliente.data_inclusao = parse_date(simples_info.get("data_opcao_simples"))
+                        cliente.data_exclusao = parse_date(simples_info.get("data_exclusao_simples"))
+                elif cliente.regime_fiscal and cliente.regime_fiscal.id == 2:
                     optante_mei = simples_info.get("mei", "Não")
                     cliente.status = "Regular" if optante_mei == "Sim" else "Irregular"
                     cliente.data_inclusao = parse_date(simples_info.get("data_opcao_mei"))
                     cliente.data_exclusao = parse_date(simples_info.get("data_exclusao_mei"))
-                
+
                 cliente.ultima_atualizacao = timezone.now()
                 cliente.save()
                 print(f"Atualizado Cliente {cliente.id} - CNPJ: {cnpj}")

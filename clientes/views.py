@@ -9,6 +9,9 @@ from clientes.forms import ClienteForm
 from django.views.generic import DetailView, UpdateView, DeleteView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
 from django.db.models import Q
+import logging
+
+logger = logging.getLogger(__name__)
 
 from clientes.utils import EscritorioRestritoMixin, filtrar_clientes_por_escritorio
 
@@ -66,10 +69,12 @@ def buscar_cnpj(request):
     url = f'https://publica.cnpj.ws/cnpj/{cnpj}'
     
     try:
+        logger.info(f'Buscando dados para o CNPJ: {cnpj}')
         resp = requests.get(url, timeout=10)
         resp.raise_for_status()
         
         data = resp.json()
+        logger.info(f'Dados retornados pela API: {data}')
         
         simples = data.get('simples', {})
         
@@ -83,10 +88,10 @@ def buscar_cnpj(request):
         razao_social = data.get("razao_social", "Não informado")
         estabelecimento = data.get('estabelecimento', {})
         nome_fantasia = estabelecimento.get("nome_fantasia") or data.get("razao_social") or "Não informado"
-        email = estabelecimento.get("email") or "Não informado"
-        ddd = estabelecimento.get("ddd1", "00")
-        telefone = estabelecimento.get("telefone1", "000000000")
-    
+        email = estabelecimento.get("email") or "nao@informado.com"
+        ddd = estabelecimento.get("ddd1") or "00"
+        telefone = estabelecimento.get("telefone1") or "000000000"
+
         socios = data.get("socios", [])
         
         if socios and isinstance(socios, list):
@@ -122,15 +127,19 @@ def buscar_cnpj(request):
         "regime_fiscal": regime_fiscal_id,
         }
         
+        logger.info(f'Dados processados: {dados}')
         return JsonResponse(dados)    
         
     except requests.exceptions.RequestException as e:
+        logger.error(f'Erro ao consultar a API: {e}')
         return JsonResponse({'error': 'Erro ao consultar o CNPJ. Tente novamente mais tarde.'}, status=500)
 
     except KeyError as e:
+        logger.error(f'Erro ao processar a resposta: campo {str(e)} não encontrado.')
         return JsonResponse({'error': f'Erro ao processar a resposta: campo {str(e)} não encontrado.'}, status=500)
 
     except Exception as e:
+        logger.error(f'Erro inesperado: {e}')
         return JsonResponse({'error': 'Erro inesperado. Contate o suporte.'}, status=500)
 
 @method_decorator(login_required, name='dispatch')
