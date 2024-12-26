@@ -501,6 +501,17 @@
             font-weight: bold;
             color: #333;
         }
+
+
+    .color-swatch {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-left: 8px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        border-radius: 4px;
+}
     </style>
 </head>
 
@@ -527,9 +538,9 @@
                 <span class="material-icons">person</span>
                 <span class="text">Meu Cadastro</span>
             </a>
-            <a href="#">
+            <a href="{% url 'configuracoes' %}">
                 <span class="material-icons">settings</span>
-                <span class="text">Opções</span>
+                <span class="text">Configurações</span>
             </a>
             <a href="{% url 'logout' %}">
                 <span class="material-icons">logout</span>

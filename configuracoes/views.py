@@ -14,3 +14,9 @@ def meu_template(request, empresa_id):
 
     return render(request, 'base.html', {'cor_principal': cor_principal})
 
+def minha_configuracao(request):
+    
+    escritorio = request.user.escritorio
+    configuracoes = Configuracoes.objects.get(empresa_config=escritorio)
+    
+    return render(request, 'configuracoes.html', {'configuracoes': configuracoes})

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Minhas Configurações - FiscoAlert
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="container">
+        <div class="title">
+            <span>Minhas Configurações</span>
+        </div>
+        <p>Veja abaixo as configurações do seu cadastro.</p>
+        <div class="field">
+            <span class="field-label">Escritorio:</span>
+            <span class="field-value">{{ configuracoes.empresa_config }}</span>
+        </div>
+        <div class="field">
+            <span class="field-label">Cor principal:</span>
+            {% if configuracoes.cor_principal %}
+                <span class="field-value">
+                    <span 
+                        class="color-swatch" 
+                        style="background-color: {{ configuracoes.cor_principal }};"
+                        title="Visualização da cor">
+                    </span>
+                    {{ configuracoes.cor_principal }}
+                </span>
+            {% else %}
+                <span class="field-value">Padrão do sistema</span>
+            {% endif %}
+        </div>
+        <div class="field">
+            <span class="field-label">E-mail para notificação:</span>
+            <span class="field-value">{{ configuracoes.email_notificacao }}</span>
+        </div>
+        <div class="field">
+            <span class="field-label">Envia notificação?</span>
+            <span class="field-value">{{ configuracoes.envia_notificacao }}</span>
+        </div>
+        <div class="actions">
+            <div class="hub-clientes-detalhe">
+                <a href="#" class="botao-primario">Editar</a>
+                <a href="{% url 'inicio' %}" class="botao-secundario">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
