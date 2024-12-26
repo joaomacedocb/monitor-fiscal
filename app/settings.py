@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'contas',
     'inicio',
     'configuracoes',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +101,12 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
+CELERY_TIMEZONE = 'America/Sao_Paulo'
+
+CELERY_RESULT_BACKEND = 'django-db'
+
 
 
 # Password validation
