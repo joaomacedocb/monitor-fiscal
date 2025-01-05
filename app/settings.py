@@ -97,7 +97,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fiscoalertdb',
-        'USER': 'joaomacedo',
+        'USER': 'postgres',
         'PASSWORD': 'tr@nsparens1a2025',
         'HOST': 'localhost',
         'PORT': '5432'
