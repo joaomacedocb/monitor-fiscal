@@ -10,6 +10,7 @@ from django.views.generic import DetailView, UpdateView, DeleteView
 from clientes.consulta_e_atualiza_clientes import consulta_e_atualiza_clientes
 from django.db.models import Q
 import logging
+from django.http import JsonResponse
 
 logger = logging.getLogger(__name__)
 
@@ -49,11 +50,12 @@ def novo_cliente_view(request):
 
 @login_required
 def atualizar_clientes_view(request):
-    consulta_e_atualiza_clientes()
-    messages.success(request, "Os dados dos clientes foram atualizados com sucesso.")
+    try:
+        consulta_e_atualiza_clientes(request.user)
+        messages.success(request, "Os dados dos clientes foram atualizados com sucesso.")
+    except Exception as e:
+        messages.error(request, f"Ocorreu um erro ao atualizar os dados dos clientes: {str(e)}")
     return redirect('clientes')
-
-from django.http import JsonResponse
 
 @login_required
 def buscar_cnpj(request):

@@ -4,8 +4,12 @@ import requests
 from django.utils import timezone
 from clientes.models import Cliente
 
-def consulta_e_atualiza_clientes():
-    clientes = Cliente.objects.filter(cnpj__isnull=False)
+def consulta_e_atualiza_clientes(user):
+    clientes = Cliente.objects.filter(
+        cnpj__isnull=False,
+        ativo = True,
+        escritorio = user.escritorio                    
+    )
 
     for cliente in clientes:
         cnpj = cliente.cnpj
