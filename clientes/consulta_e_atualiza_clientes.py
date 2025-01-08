@@ -28,7 +28,7 @@ def consulta_e_atualiza_clientes(user):
                         if optante_simples == "Sim" and not data_exclusao_simples:
                             cliente.status = "Regular"
                         else:
-                            cliente.status = "Irregular"
+                            cliente.status = "Irregular ou Migrou"
                         
                         cliente.data_inclusao = parse_date(simples_info.get("data_opcao_simples"))
                         cliente.data_exclusao = parse_date(data_exclusao_simples)
